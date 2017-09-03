@@ -4,11 +4,14 @@ export class AlunoService {
   alunos: Aluno[] = [];
   
   gravar(aluno: Aluno): Aluno | null {
-    let result: Aluno | null = null;
-    if (!this.alunos.find(a => a.cpf === aluno.cpf)) {
+    var result = null;
+    if (this.cpfNaoCadastrado(aluno.cpf)) {
       this.alunos.push(aluno);
       result = aluno;
     }
     return result;
-  }  
+  }
+  cpfNaoCadastrado(cpf: string): boolean {
+     return !this.alunos.find(a => a.cpf == cpf);
+  }
 }
