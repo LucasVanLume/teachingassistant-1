@@ -15,11 +15,25 @@ import { AlunoService } from './aluno.service';
     alunos: Aluno[] = [];
 
     atualizarAluno(aluno: Aluno): void {
-       this.alunoService.atualizar(aluno);
+      this.alunoService.atualizar(aluno).subscribe({
+        next: (a) => {
+          if (a == null) {
+            alert("Unexpected fatal error trying to update student information! Please contact the systems administrators.");
+          }
+        },
+        error: (msg) => {
+          alert(msg.message);
+        }
+      });
     }
 
     ngOnInit(): void {
-      this.alunos = this.alunoService.getAlunos();
+      this.alunoService.getAlunos()
+      .subscribe({
+        next: (as) => { this.alunos = as; },
+        error: (err) => { alert(err.message); }
+      });
     }
+
 
   }
