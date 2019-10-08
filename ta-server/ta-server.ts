@@ -25,13 +25,13 @@ taserver.get('/alunos', function (req: express.Request, res: express.Response) {
   res.send(JSON.stringify(cadastro.getAlunos()));
 })
 
-taserver.post('/alunos', function (req: express.Request, res: express.Response) {
-  var aluno: Aluno = <Aluno> req.body; //verificar se � mesmo Aluno!
+taserver.post('/aluno', function (req: express.Request, res: express.Response) {
+  var aluno: Aluno = <Aluno> req.body; //verificar se é mesmo Aluno!
   aluno = cadastro.cadastrar(aluno);
   if (aluno) {
     res.send({"success": "O aluno foi cadastrado com sucesso"});
   } else {
-    res.send({"failure": "O aluno n�o pode ser cadastrado"});
+    res.send({"failure": "O aluno não pode ser cadastrado"});
   }
 })
 
@@ -41,10 +41,16 @@ taserver.put('/alunos', function (req: express.Request, res: express.Response) {
   if (aluno) {
     res.send({"success": "O aluno foi atualizado com sucesso"});
   } else {
-    res.send({"failure": "O aluno n�o pode ser atualizado"});
+    res.send({"failure": "O aluno não pode ser atualizado"});
   }
 })
 
-taserver.listen(3000, function () {
+var server = taserver.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 })
+
+function closeServer(): void {
+  server.close();
+}
+
+export { server, closeServer }
